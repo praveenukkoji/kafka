@@ -1,5 +1,5 @@
 server:
-    port: 8080
+    port: ${PORT}
 
 spring:
     application:
@@ -13,6 +13,6 @@ spring:
             hibernate.format_sql: true
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/coursedb
-        username: praveenukkoji
-        password: postgres
+        url: ${DB_URL}/${DB_NAME}
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
