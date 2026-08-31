@@ -1,8 +1,9 @@
-package com.praveenukkoji.kafkaproducer.model;
+package com.praveenukkoji.kafkaproducer.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Course {
@@ -32,7 +34,7 @@ public class Course {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdOn;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private String createdBy;
 
     @LastModifiedDate

@@ -1,18 +1,15 @@
-package com.praveenukkoji.kafkaproducer.dto;
+package com.praveenukkoji.kafkaproducer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseDTO {
-    private UUID courseId;
+public class CreateCourseRequest {
     private String courseName;
     private String courseTrainer;
     private String courseType;
