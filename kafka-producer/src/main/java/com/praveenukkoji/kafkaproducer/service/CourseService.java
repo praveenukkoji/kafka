@@ -5,6 +5,8 @@ import com.praveenukkoji.kafkaproducer.exception.CourseCreationException;
 import com.praveenukkoji.kafkaproducer.exception.CourseNotFoundException;
 import com.praveenukkoji.kafkaproducer.exception.InvalidCourseIdException;
 import com.praveenukkoji.kafkaproducer.entity.Course;
+import com.praveenukkoji.kafkaproducer.kafka.event.implementation.CourseCreatedEvent;
+import com.praveenukkoji.kafkaproducer.kafka.service.KafkaService;
 import com.praveenukkoji.kafkaproducer.model.CreateCourseRequest;
 import com.praveenukkoji.kafkaproducer.repository.CourseRepository;
 import com.praveenukkoji.kafkaproducer.utils.Utility;
@@ -23,6 +25,9 @@ import java.util.UUID;
 public class CourseService {
     private final CourseRepository courseRepository;
     private final Utility utility;
+
+    private final KafkaService kafkaService;
+
     private final ModelMapper modelMapper;
 
     public CourseDTO getCourseById(final String courseId) {
@@ -65,6 +70,11 @@ public class CourseService {
         try {
             course = courseRepository.saveAndFlush(course);
             log.info("course created: {}", course);
+
+            CourseCreatedEvent courseCreatedEvent =  modelMapper.map(course, CourseCreatedEvent.class);
+
+            log.info("sending event: {}", courseCreatedEvent);
+            kafkaService.send(courseCreatedEvent);
         }
         catch(Exception e) {
             log.error("course creation failed, error -> {}", e.getMessage());
