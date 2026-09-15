@@ -1,5 +1,6 @@
 package com.praveenukkoji.kafkaproducer.handler;
 
+import com.praveenukkoji.kafkaproducer.exception.CourseCreationException;
 import com.praveenukkoji.kafkaproducer.exception.CourseNotFoundException;
 import com.praveenukkoji.kafkaproducer.exception.InvalidCourseIdException;
 import com.praveenukkoji.kafkaproducer.handler.model.ExceptionResponse;
@@ -30,6 +31,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCourseIdException.class)
     public ResponseEntity<?> handleException(InvalidCourseIdException exception) {
         log.error("InvalidCourseIdException - {}", exception.getMessage());
+
+        ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(exception.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(CourseCreationException.class)
+    public ResponseEntity<?> handleException(CourseCreationException exception) {
+        log.error("CourseCreationException - {}", exception.getMessage());
 
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .timestamp(LocalDateTime.now())
