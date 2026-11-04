@@ -1,4 +1,4 @@
-HELP.md
+kafka-producer/HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+.idea/
+
+mvnw*
+
+maven-wrapper.properties
+
+.DS_Store
